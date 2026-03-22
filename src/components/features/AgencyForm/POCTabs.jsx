@@ -51,7 +51,6 @@ export default function POCTabs() {
         </button>
       </div>
 
-      {/* Pass selected index down */}
       {pocs.length > 0 && (
         <div className="mt-4">
           <POCForm selectedPOCIndex={selectedPOCIndex} />

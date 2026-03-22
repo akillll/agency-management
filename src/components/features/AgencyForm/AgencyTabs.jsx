@@ -39,7 +39,6 @@ export default function AgencyTabs() {
         );
       })}
 
-      {/* Add Agency */}
       <button
         onClick={addAgency}
         className="px-4 py-2 rounded-full border border-gray-600 text-white"

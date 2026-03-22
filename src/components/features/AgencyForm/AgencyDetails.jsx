@@ -1,4 +1,5 @@
 import { useAgencyStore } from "../../../store/agencyStore";
+import { useAgencyValidation } from "../../../hooks/useAgency";
 import Input from "../../base/Input";
 import Textarea from "../../base/Textarea";
 
@@ -10,9 +11,13 @@ const agencyTypes = [
 ];
 
 export default function AgencyDetails() {
-  const { agencies, selectedAgencyIndex, updateAgency } = useAgencyStore();
+  const { agencies, selectedAgencyIndex, updateAgency } =
+    useAgencyStore();
+
+  const { agencyErrors } = useAgencyValidation();
 
   const agency = agencies[selectedAgencyIndex];
+  const errors = agencyErrors[selectedAgencyIndex] || {};
 
   if (!agency) return null;
 
@@ -26,16 +31,27 @@ export default function AgencyDetails() {
     <div className="space-y-4">
       {/* Agency Name */}
       <div>
-        <label className="text-sm text-gray-300">Agency Name*</label>
+        <label className="text-sm text-gray-300">
+          Agency Name*
+        </label>
         <Input
           value={agency.agencyName}
-          onChange={(e) => handleChange("agencyName", e.target.value)}
+          onChange={(e) =>
+            handleChange("agencyName", e.target.value)
+          }
         />
+        {errors.agencyName && (
+          <p className="text-red-400 text-xs mt-1">
+            {errors.agencyName}
+          </p>
+        )}
       </div>
 
       {/* Agency Type */}
       <div>
-        <label className="text-sm text-gray-300">Agency Type*</label>
+        <label className="text-sm text-gray-300">
+          Agency Type*
+        </label>
         <div className="flex gap-2 flex-wrap mt-2">
           {agencyTypes.map((type) => {
             const isSelected = agency.agencyType === type;
@@ -57,9 +73,13 @@ export default function AgencyDetails() {
             );
           })}
         </div>
+        {errors.agencyType && (
+          <p className="text-red-400 text-xs mt-1">
+            {errors.agencyType}
+          </p>
+        )}
       </div>
 
-      {/* Completion Date */}
       <div>
         <label className="text-sm text-gray-300">
           Partnership Completion*
@@ -71,16 +91,30 @@ export default function AgencyDetails() {
             handleChange("completionDate", e.target.value)
           }
         />
+        {errors.completionDate && (
+          <p className="text-red-400 text-xs mt-1">
+            {errors.completionDate}
+          </p>
+        )}
       </div>
 
       {/* Notes */}
       <div>
-        <label className="text-sm text-gray-300">Notes*</label>
+        <label className="text-sm text-gray-300">
+          Notes*
+        </label>
         <Textarea
           rows={4}
           value={agency.notes}
-          onChange={(e) => handleChange("notes", e.target.value)}
+          onChange={(e) =>
+            handleChange("notes", e.target.value)
+          }
         />
+        {errors.notes && (
+          <p className="text-red-400 text-xs mt-1">
+            {errors.notes}
+          </p>
+        )}
       </div>
     </div>
   );
